@@ -1,4 +1,3 @@
-````markdown ```
 # 🌍 Country Currency & Exchange API
 
 A FastAPI backend that fetches country data and exchange rates from public APIs, computes an **estimated GDP**, caches everything in MySQL, and exposes clean RESTful endpoints — including a generated summary image.
@@ -274,22 +273,6 @@ cd country-currency-api
 docker compose up -d
 ```
 
----
-
-## 🧾 Submission Details
-
-After verifying your live API works:
-
-1. Go to Slack channel **#stage-2-backend**
-2. Run `/stage-two-backend`
-3. Submit:
-
-   * ✅ API base URL (e.g., `https://countryapi-production.up.railway.app`)
-   * ✅ GitHub repo link
-   * ✅ Full name
-   * ✅ Email
-
----
 
 ## 👨‍💻 Author
 
@@ -300,5 +283,3 @@ Slack: `@SegunO` – HNG13 Backend Wizards
 
 
 
-# country-currency-api
-# country-currency-api
