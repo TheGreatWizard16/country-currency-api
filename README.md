@@ -1,4 +1,4 @@
-````markdown
+````markdown ```
 # 🌍 Country Currency & Exchange API
 
 A FastAPI backend that fetches country data and exchange rates from public APIs, computes an **estimated GDP**, caches everything in MySQL, and exposes clean RESTful endpoints — including a generated summary image.
@@ -300,4 +300,5 @@ Slack: `@SegunO` – HNG13 Backend Wizards
 
 
 
+# country-currency-api
 # country-currency-api
