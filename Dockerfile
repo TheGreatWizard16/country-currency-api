@@ -1,21 +1,17 @@
-# Base image with Python 3.11
 FROM python:3.11-slim
 
-# Working directory inside the container
 WORKDIR /app
 
-# Install dependencies
+# Install deps first (better caching)
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy source code and env
+# Copy source
 COPY src ./src
-COPY .env ./.env
 
-# Create cache folder for summary image
+# Runtime cache dir for image output
 RUN mkdir -p cache
 
 EXPOSE 8000
-
-# Start FastAPI with Uvicorn
-CMD ["uvicorn", "src.app:app", "--host", "0.0.0.0", "--port", "8000"]
+# Use Railway's $PORT if present, else 8000 locally
+CMD ["sh", "-c", "uvicorn src.app:app --host 0.0.0.0 --port ${PORT:-8000}"]
