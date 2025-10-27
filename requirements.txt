@@ -1,0 +1,20 @@
+# Core framework + web server
+fastapi
+uvicorn[standard]
+
+# ORM + MySQL driver
+sqlalchemy
+pymysql
+
+# HTTP requests for external APIs
+httpx
+
+# Image generation
+pillow
+
+# Env management
+pydantic-settings
+python-dotenv
+
+# DB migrations (optional)
+alembic

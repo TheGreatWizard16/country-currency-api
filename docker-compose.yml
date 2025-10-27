@@ -1,0 +1,29 @@
+# Compose file: spins up MySQL and the FastAPI app container
+services:
+  db:
+    image: mysql:8.0
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: country_cache
+    ports:
+      - "3306:3306"
+    # Healthcheck waits until DB is ready before app starts
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-ppass"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  app:
+    build: .
+    env_file: .env
+    volumes:
+      - ./src:/app/src          # live code mount
+      - ./.env:/app/.env        # env file inside container
+      - ./cache:/app/cache      # image cache folder
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
