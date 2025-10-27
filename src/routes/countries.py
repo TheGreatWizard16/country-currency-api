@@ -3,7 +3,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import FileResponse, JSONResponse
 from sqlalchemy.orm import Session
-from ..db import get_db, Base, engine
+from ..db import get_db
 from ..schemas import CountryOut
 from .. import crud
 from ..services.refresh import refresh_all
@@ -12,9 +12,6 @@ import os
 
 router = APIRouter(prefix="/countries", tags=["countries"])
 
-# Create tables automatically (for dev convenience)
-Base.metadata.create_all(bind=engine)
-
 @router.post("/refresh")
 def refresh(db: Session = Depends(get_db)):
     # Pull new data + regenerate image
@@ -22,7 +19,12 @@ def refresh(db: Session = Depends(get_db)):
     return {"status": "ok"}
 
 @router.get("", response_model=list[CountryOut])
-def list_countries(region: str | None = None, currency: str | None = None, sort: str | None = None, db: Session = Depends(get_db)):
+def list_countries(
+    region: str | None = None,
+    currency: str | None = None,
+    sort: str | None = None,
+    db: Session = Depends(get_db),
+):
     return crud.list_countries(db, region=region, currency=currency, sort=sort)
 
 @router.get("/{name}", response_model=CountryOut)
