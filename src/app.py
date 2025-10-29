@@ -1,7 +1,8 @@
 # Entry point of the app
-
+from . import models 
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+
 
 # Routers
 from .routes.countries import router as countries_router
@@ -32,6 +33,11 @@ def init_db_with_retry():
         except Exception:
             # Swallow unexpected init errors; /health should still respond
             time.sleep(2)
+
+@app.get("/")
+def root():
+    return {"ok": True}
+
 
 @app.get("/health")
 def health():
