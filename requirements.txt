@@ -6,7 +6,7 @@ uvicorn[standard]
 sqlalchemy
 pymysql
 
-# HTTP requests for external APIs
+# HTTP requests
 httpx
 
 # Image generation
