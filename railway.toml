@@ -4,8 +4,7 @@
 root = "."
 
 [deploy]
-# Start command for Python service
-startCommand = "uvicorn src.app:app --host 0.0.0.0 --port $PORT"
+
 # Optional health check to mark deployment healthy
 healthcheckPath = "/health"
 
