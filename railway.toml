@@ -1,18 +1,9 @@
-# railway.toml (repo root)
 [build]
-# Force root to project root
+builder = "dockerfile"
 root = "."
 
 [deploy]
-
-# Optional health check to mark deployment healthy
 healthcheckPath = "/health"
 
-[env]
-DB_DIALECT = "mysql"
-DB_HOST    = "mysql.railway.internal"
-DB_PORT    = "3306"
-DB_USER    = "root"
-DB_PASS    = "mpTvvnBqrfMWVtTpLXizDcZMaCZwwhBr"
-DB_NAME    = "railway"
-LOG_LEVEL  = "info"
+
+
