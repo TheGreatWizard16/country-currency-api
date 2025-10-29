@@ -18,3 +18,8 @@ python-dotenv
 
 # DB migrations (optional)
 alembic
+
+- PyMySQL==1.1.0
++ PyMySQL[rsa]==1.1.0
++ cryptography>=42.0.0
+

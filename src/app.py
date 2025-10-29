@@ -1,22 +1,21 @@
-# Entry point of the app
-from . import models 
+# src/app.py
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+import time
+from sqlalchemy.exc import OperationalError
 
+# ensure models are registered before create_all
+from . import models
 
-# Routers
+# import DB primitives from db.py
+from .db import engine, Base, DB_URL
+
+# routers
 from .routes.countries import router as countries_router
 from .routes.status import router as status_router
 
-# --- DB init with retry so Railway healthcheck can pass even if MySQL is slow ---
-import time
-from sqlalchemy.exc import OperationalError
-from .db import engine, Base
-
-# src/app.py
-from .settings import settings
-print(f"[boot] DB_DIALECT={settings.DB_DIALECT} DB_HOST={getattr(settings,'DB_HOST',None)} DB_NAME={getattr(settings,'DB_NAME',None)}")
-
+# log sanitized DB target (host:port/db)
+print("[boot] USING_DB =", DB_URL.split("@")[-1].split("?")[0])
 
 app = FastAPI(title="Country Currency & Exchange API")
 
@@ -31,26 +30,21 @@ def init_db_with_retry():
         except OperationalError:
             time.sleep(2)
         except Exception:
-            # Swallow unexpected init errors; /health should still respond
             time.sleep(2)
 
 @app.get("/")
 def root():
     return {"ok": True}
 
-
 @app.get("/health")
 def health():
-    # Simple health check; does not touch DB
     return {"ok": True}
 
 # Global error handler
 @app.exception_handler(Exception)
 async def fallback_error_handler(request: Request, exc: Exception):
-    # Let HTTPException bubble with its own status code
     if hasattr(exc, "status_code"):
         raise exc
-    # Convert unknown errors to standard 500
     return JSONResponse(status_code=500, content={"error": "Internal server error"})
 
 # Mount routers
