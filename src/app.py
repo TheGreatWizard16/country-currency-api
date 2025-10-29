@@ -12,6 +12,11 @@ import time
 from sqlalchemy.exc import OperationalError
 from .db import engine, Base
 
+# src/app.py
+from .settings import settings
+print(f"[boot] DB_DIALECT={settings.DB_DIALECT} DB_HOST={getattr(settings,'DB_HOST',None)} DB_NAME={getattr(settings,'DB_NAME',None)}")
+
+
 app = FastAPI(title="Country Currency & Exchange API")
 
 @app.on_event("startup")
